@@ -1,6 +1,8 @@
 # Zhaofeng Si — academic homepage
 
-A bilingual, responsive academic homepage for GitHub Pages. Built with plain HTML, CSS, and JavaScript, without a build step, analytics, or third-party font dependencies.
+A bilingual, responsive academic website for GitHub Pages. Built with plain HTML, CSS, and JavaScript, without a build step, analytics, or third-party font dependencies.
+
+The layout follows the owner's reference, https://mingzhenhuang.com/experiences/: a white background, compact profile sidebar, and separate pages for publications and experience. The implementation is original; it does not copy that site's source, images, or personal content and does not depend on Jekyll or AcademicPages.
 
 ## Publish
 
@@ -15,9 +17,12 @@ Official instructions: https://docs.github.com/en/pages/quickstart
 
 ## Edit
 
-- `index.html`: biography, papers, experience, and service. English and Chinese text use `lang="en"` and `lang="zh-CN"` spans.
+- `index.html`: biography, research overview, and news.
+- `publications/index.html`: conference/workshop papers, journal articles, and public manuscripts.
+- `experiences/index.html`: education, experience, projects, and reviewing service.
+- English and Chinese text use `lang="en"` and `lang="zh-CN"` spans in all three pages.
 - `styles.css`: layout, colors, responsive rules, and print styling.
-- `script.js`: language preference and publication filtering.
+- `script.js`: language preference, retained when moving between pages.
 - `assets/favicon.svg`: the site's text-based icon.
 
 Only publicly available papers are listed. Unpublished manuscript titles and details of ongoing methods are excluded. The CV button opens an email request; no CV PDF is published in this repository.

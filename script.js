@@ -1,33 +1,22 @@
 (() => {
   const root = document.documentElement;
-  const languageButton = document.getElementById('language-toggle');
-  const status = document.getElementById('filter-status');
-  const papers = [...document.querySelectorAll('.publication')];
-  let currentFilter = 'all';
-  function announceResults() {
-    const count = papers.filter(paper => !paper.hidden).length;
-    status.textContent = root.lang === 'zh-CN' ? `显示 ${count} 篇论文与预印本` : `${count} publications and preprints shown`;
-  }
+  const button = document.getElementById('language-toggle');
+  const titles = {
+    home: ['Zhaofeng Si 司兆峰', '司兆峰 Zhaofeng Si'],
+    publications: ['Publications — Zhaofeng Si', '论文 — 司兆峰'],
+    experiences: ['Experiences — Zhaofeng Si', '经历 — 司兆峰'],
+  };
   function setLanguage(language) {
-    root.lang = language === 'zh-CN' ? 'zh-CN' : 'en';
-    languageButton.innerHTML = root.lang === 'en' ? '中文 <span aria-hidden="true">↗</span>' : 'EN <span aria-hidden="true">↗</span>';
-    languageButton.setAttribute('aria-label', root.lang === 'en' ? '切换为中文' : 'Switch to English');
-    document.title = root.lang === 'en' ? 'Zhaofeng Si · Image Forensics & Machine Learning' : '司兆峰 · 图像取证与机器学习';
-    document.querySelector('nav').setAttribute('aria-label', root.lang === 'en' ? 'Main navigation' : '主导航');
-    document.querySelector('.filters').setAttribute('aria-label', root.lang === 'en' ? 'Filter publications' : '筛选论文');
-    announceResults();
-    try { localStorage.setItem('zhaofeng-site-language', root.lang); } catch (_) { /* Storage is optional. */ }
+    const chinese = language === 'zh-CN';
+    root.lang = chinese ? 'zh-CN' : 'en';
+    button.textContent = chinese ? 'EN' : '中文';
+    button.setAttribute('aria-label', chinese ? 'Switch to English' : '切换为中文');
+    document.querySelector('nav').setAttribute('aria-label', chinese ? '主导航' : 'Main navigation');
+    document.title = titles[document.body.dataset.page][chinese ? 1 : 0];
+    try { localStorage.setItem('zhaofeng-site-language', root.lang); } catch (_) { /* Optional preference storage. */ }
   }
-  let savedLanguage;
-  try { savedLanguage = localStorage.getItem('zhaofeng-site-language'); } catch (_) { /* Keep English as the default. */ }
-  if (savedLanguage === 'zh-CN') setLanguage(savedLanguage);
-  languageButton.addEventListener('click', () => setLanguage(root.lang === 'en' ? 'zh-CN' : 'en'));
-  document.querySelectorAll('[data-filter]').forEach(button => {
-    button.addEventListener('click', () => {
-      currentFilter = button.dataset.filter;
-      document.querySelectorAll('[data-filter]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
-      papers.forEach(paper => { paper.hidden = currentFilter !== 'all' && paper.dataset.category !== currentFilter; });
-      announceResults();
-    });
-  });
+  let saved;
+  try { saved = localStorage.getItem('zhaofeng-site-language'); } catch (_) { /* English by default. */ }
+  setLanguage(saved);
+  button.addEventListener('click', () => setLanguage(root.lang === 'en' ? 'zh-CN' : 'en'));
 })();
